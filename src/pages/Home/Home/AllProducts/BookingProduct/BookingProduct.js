@@ -1,0 +1,92 @@
+import React, { useContext } from "react";
+import { AuthContext } from "../../../../../context/AuthProvider";
+
+const BookingProduct = ({ bookProduct }) => {
+  // console.log(bookProduct)
+  const { user } = useContext(AuthContext);
+  const handleBooking = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const price = form.price.value;
+    const location = form.location.value;
+    const email = form.email.value;
+    const phone = form.phone.value;
+    // [3, 4, 5].map((value, i) => console.log(value))
+    const booking = {
+      name,
+      price,
+      location,
+      email,
+      phone,
+    };
+    console.log(booking)
+    
+  };
+
+  return (
+    <div>
+      <input type="checkbox" id="product-modal" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box relative">
+          <label
+            htmlFor="product-modal"
+            className="btn btn-sm btn-circle absolute right-2 top-2"
+          >
+            ✕
+          </label>
+          <h3 className="text-lg font-bold">{bookProduct.product_name}</h3>
+          <form
+            onSubmit={handleBooking}
+            className="grid grid-cols-1 gap-3 mt-10"
+          >
+            <input
+              name="name"
+              type="text"
+              defaultValue={user?.displayName}
+              disabled
+              placeholder="Your Name"
+              className="input w-full input-bordered"
+            />
+            <input
+              name="email"
+              type="email"
+              defaultValue={user?.email}
+              disabled
+              placeholder="Email Address"
+              className="input w-full input-bordered"
+            />
+            <input
+              name="price"
+              type="text"
+              defaultValue={bookProduct.price}
+              disabled
+              placeholder="Your Name"
+              className="input w-full input-bordered"
+            />
+            <input
+              name="location"
+              type="text"
+              placeholder="Location"
+              className="input w-full input-bordered"
+            />
+            <input
+              name="phone"
+              type="text"
+              placeholder="Phone Number"
+              className="input w-full input-bordered"
+            />
+            <br />
+            <input
+              className="btn btn-accent w-full"
+              type="submit"
+              value="Submit"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BookingProduct;

@@ -1,19 +1,25 @@
-import React from 'react';
-import { useLoaderData } from 'react-router-dom';
-import AllProducts from '../AllProducts/AllProducts';
+import React, { useState } from "react";
+import { useLoaderData } from "react-router-dom";
+import AllProducts from "../AllProducts/AllProducts";
+import BookingProduct from "../AllProducts/BookingProduct/BookingProduct";
 
 const Category = () => {
+  const category = useLoaderData();
+  const [bookProduct, setBookProduct] = useState(null)
+//   console.log(category);
 
-    const category = useLoaderData()
-    console.log(category)
-    
-    return (
-        <div className='grid md:grid-cols-2 gap-3'>
-            {
-                category.map(product => <AllProducts product={product}/> )
-            }
-        </div>
-    );
+  return (
+    <section>
+      <div className="grid md:grid-cols-2 gap-3">
+        {category.map((product) => (
+          <AllProducts key={product._id} setBookProduct={setBookProduct} product={product} />
+        ))}
+      </div>
+      {
+        bookProduct && <BookingProduct bookProduct={bookProduct}/>
+      }
+    </section>
+  );
 };
 
 export default Category;
