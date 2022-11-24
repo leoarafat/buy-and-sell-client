@@ -16,7 +16,7 @@ const Category = () => {
         ))}
       </div>
       {
-        bookProduct && <BookingProduct bookProduct={bookProduct}/>
+        bookProduct && <BookingProduct setBookProduct={setBookProduct} bookProduct={bookProduct}/>
       }
     </section>
   );
