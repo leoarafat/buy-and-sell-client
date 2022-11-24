@@ -3,7 +3,8 @@ import DashboardLayout from "../../Layout/DashboardLayout/DashboardLayout";
 import Main from "../../Layout/Main/Main";
 import Blog from "../../pages/Blog/Blog";
 import Dashboard from "../../pages/Dashboard/Dashboard/Dashboard";
-import AllProducts from "../../pages/Home/Home/AllProducts/AllProducts";
+import ErrorPage from "../../pages/ErrorPage/ErrorPage";
+
 import Category from "../../pages/Home/Home/Category/Category";
 import Home from "../../pages/Home/Home/Home";
 import Login from "../../pages/Login/Login";
@@ -14,6 +15,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 export const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <ErrorPage/>,
     element: <Main />,
     children: [
       {
@@ -48,6 +50,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
+        errorElement: <ErrorPage/>,
         element: 
           <PrivateRoute>
             <DashboardLayout />
