@@ -1,11 +1,16 @@
 import React from 'react';
+
 import Banner from '../Banner/Banner';
+import ProductsCategory from './ProductsCategory/ProductsCategory';
 
 const Home = () => {
+    
+    // console.log(data)
+    
     return (
         <div>
-            <h1>home</h1>
-            <Banner/>
+            {/* <Banner/> */}
+            <ProductsCategory/>
         </div>
     );
 };
