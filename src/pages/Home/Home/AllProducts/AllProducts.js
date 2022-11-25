@@ -16,56 +16,36 @@ const AllProducts = ({ product, setBookProduct }) => {
     product_name,
     price,
     original_price,
+    posted_time,
+    posted_date
   } = product;
-  // console.log(product);
+  console.log(product);
 
   return (
-    <div className="card w-full mx-auto bg-base-100 shadow-xl">
+    <div className="card w-full glass">
       <figure>
-        <img className="h-[350px]" src={image_url} alt="Shoes" />
+        <img className="h-[350px]" src={image_url} alt="laptop!" />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">
-          {product_name}
-          <div className="badge badge-secondary">NEW</div>
-        </h2>
-        <p>{description}</p>
-        <div className="flex flex-col mt-5">
-          <div className="badge badge-outline my-2">RAM: {RAM}</div>
-          <div className="badge badge-outline my-2">
-            Generation: {Generation}
-          </div>
-          <div className="badge badge-outline my-2">Storage: {Storage}</div>
-          <div className="badge badge-outline my-2">
-            Communication: {Communication}
-          </div>
-         
-          <div className="badge badge-outline my-2">Condition: {condition}</div>
-          <div className="badge badge-outline my-2">
-            Purchase Year {included}
-          </div>
-          <div className="badge badge-outline my-2">Location: {location}</div>
-          <div className="flex flex-col">
-            <div className="btn btn-xs btn-primary ">Mobile: {mobile}</div>
-            
-              <div className="btn btn-xs btn-primary my-1">
-                Original Price: {original_price}
-              </div>
-              <div className="btn btn-xs btn-primary">
-                Resell Price: {price}
-              </div>
-            
-          </div>
-
-          <div className="text-center">
-            <label
-              onClick={() => setBookProduct(product)}
-              htmlFor="product-modal"
-              className="btn my-2"
-            >
-              Book Now
-            </label>
-          </div>
+        <h2 className="card-title">{product_name}</h2>
+        <p>{included}</p>
+        <p>Purchase Year{product.owner.Purchase_Year}</p>
+        <p>Original Price: {original_price}Tk</p>
+        <p>Sell Price: {price}Tk</p>
+        <p>Contact: {mobile}</p>
+        <p>Seller Location: {location}</p>
+        <p>{included}</p>
+        <p>Posted Time: {posted_time}</p>
+        <p>Date: {posted_date}</p>
+        
+        <div className="card-actions justify-end">
+          <label
+            onClick={() => setBookProduct(product)}
+            htmlFor="product-modal"
+            className="btn my-2"
+          >
+            Book Now
+          </label>
         </div>
       </div>
     </div>
