@@ -6,6 +6,7 @@ import AdminPanel from "../../pages/Dashboard/AdminPanel/AdminPanel";
 import AllUser from "../../pages/Dashboard/AllUser/AllUser";
 import Dashboard from "../../pages/Dashboard/Dashboard/Dashboard";
 import MyOrders from "../../pages/Dashboard/MyOrders/MyOrders";
+import Payment from "../../pages/Dashboard/Payment/Payment";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 
 import Category from "../../pages/Home/Home/Category/Category";
@@ -51,7 +52,7 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/category/${params.id}`),
         element: <Category />,
-      },
+    },
       {
         path: "/dashboard",
         errorElement: <ErrorPage />,
@@ -72,6 +73,16 @@ export const router = createBrowserRouter([
                 <AllUser />
               </AdminRoute>
             ),
+          },
+          {
+            path: "/dashboard/payment/:id",
+            element: 
+              <AdminRoute>
+                <Payment />
+              </AdminRoute>,
+              loader:({params})=> fetch(`http://localhost:5000/bookings/${params.id}`)
+              
+         
           },
           {
             path: "/dashboard/admin",

@@ -20,6 +20,7 @@ const BookingProduct = ({ bookProduct, setBookProduct }) => {
       location,
       email,
       phone,
+      productName: bookProduct.product_name
     };
     // console.log(booking)
     
@@ -89,12 +90,14 @@ const BookingProduct = ({ bookProduct, setBookProduct }) => {
               className="input w-full input-bordered"
             />
             <input
+            required
               name="location"
               type="text"
               placeholder="Location"
               className="input w-full input-bordered"
             />
             <input
+            required
               name="phone"
               type="text"
               placeholder="Phone Number"
