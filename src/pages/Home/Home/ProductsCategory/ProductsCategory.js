@@ -11,7 +11,7 @@ const ProductsCategory = () => {
       .then((data) => setCategories(data));
   }, []);
   return (
-    <div className="w-full mx-auto text-center bg-gray-200 p-3 my-3">
+    <div className="w-full mx-auto text-center p-3 my-3">
       {/* <h4>All Category: {categories.length}</h4> */}
       <button
         
@@ -22,12 +22,14 @@ const ProductsCategory = () => {
           New
         </span>
       </button>
-      <div>
+      <div className="flex justify-around items-center">
         {categories.map((category) => (
           <div key={category._id}>
             <ul className="menu rounded-box my-1">
               <li className="hover-bordered">
-                <Link to={`/category/${category.c_id}`}>{category.name}</Link>
+                <Link to={`/category/${category.c_id}`}>
+                  <img className="w-[150px]" src={category.logo} alt="" />
+                </Link>
               </li>
             </ul>
           </div>

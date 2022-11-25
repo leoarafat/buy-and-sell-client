@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Register = () => {
+  // const [userRole, setUserRole] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -14,19 +16,19 @@ const Register = () => {
   const [signUpError, setSignUPError] = useState("");
   const naviGate = useNavigate();
   const handleRegister = (data) => {
-    console.log(data);
+    // console.log(data,userRole);
     setSignUPError("");
     createUser(data.email, data.password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
-        toast("User Created Successfully.");
+        // console.log(user,userRole);
+        toast.success("Register Successfully.");
         const userInfo = {
           displayName: data.name,
         };
         updateUser(userInfo)
           .then(() => {
-            naviGate("/");
+            saveUserToDatabase(data.name, data.email, data.role)
           })
           .catch((err) => console.log(err));
       })
@@ -35,6 +37,40 @@ const Register = () => {
         setSignUPError(error.message);
       });
   };
+//save user data to database
+const saveUserToDatabase = (name, email, role) =>{
+  const user ={name, email, role};
+  fetch('http://localhost:5000/users', {
+      method: 'POST',
+      headers: {
+          'content-type': 'application/json'
+      },
+      body: JSON.stringify(user)
+  })
+  // console.log(user)
+  
+  .then(res => res.json())
+  .then(data =>{
+    getUserToken(email)
+      // console.log(data)
+      
+      
+  })
+}
+const getUserToken = email =>{
+  fetch(`http://localhost:5000/jwt?email=${email}`)
+  .then(res => res.json())
+  .then(data => {
+      if (data.accessToken) {
+          localStorage.setItem('accessToken', data.accessToken);
+          // setToken(data.accessToken);
+          naviGate("/");
+      }
+  });
+}
+
+
+
 
   return (
     <div className="h-[800px] flex justify-center items-center">
@@ -93,7 +129,6 @@ const Register = () => {
               <p className="text-red-500">{errors.password.message}</p>
             )}
           </div>
-
           <div className="form-control w-full max-w-xs">
             <label className="label">
               {" "}
@@ -103,9 +138,9 @@ const Register = () => {
               {...register("role")}
               className="select input-bordered w-full max-w-xs"
             >
-              <option value="">Please Select a role</option>
-              <option value="">user</option>
-              <option value="">seller</option>
+              <option >Please Select a role</option>
+              <option value="user">user</option>
+              <option value="seller">seller</option>
             </select>
           </div>
 

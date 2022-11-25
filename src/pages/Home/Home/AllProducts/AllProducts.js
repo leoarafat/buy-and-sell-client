@@ -17,7 +17,7 @@ const AllProducts = ({ product, setBookProduct }) => {
     price,
     original_price,
   } = product;
-  console.log(product);
+  // console.log(product);
 
   return (
     <div className="card w-full mx-auto bg-base-100 shadow-xl">
