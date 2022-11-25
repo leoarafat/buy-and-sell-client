@@ -6,7 +6,11 @@ const ProductsCategory = () => {
 //   console.log(categories);
 
   useEffect(() => {
-    fetch("http://localhost:5000/category")
+    fetch("http://localhost:5000/category",{
+      headers:{
+        authorization: `bearer ${localStorage.getItem('accessToken')}`
+      }
+    })
       .then((res) => res.json())
       .then((data) => setCategories(data));
   }, []);

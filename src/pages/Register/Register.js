@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
+import useToken from "../../customHooks/useToken";
 
 const Register = () => {
-  // const [userRole, setUserRole] = useState("");
+  
 
   const {
     register,
@@ -13,8 +14,15 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   const { createUser, updateUser } = useContext(AuthContext);
-  const [signUpError, setSignUPError] = useState("");
   const naviGate = useNavigate();
+  const [signUpError, setSignUPError] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [token] = useToken(userEmail)
+  
+  if(token){
+    naviGate('/')
+  }
+
   const handleRegister = (data) => {
     // console.log(data,userRole);
     setSignUPError("");
@@ -51,23 +59,13 @@ const saveUserToDatabase = (name, email, role) =>{
   
   .then(res => res.json())
   .then(data =>{
-    getUserToken(email)
+    setUserEmail(email)
       // console.log(data)
       
       
   })
 }
-const getUserToken = email =>{
-  fetch(`http://localhost:5000/jwt?email=${email}`)
-  .then(res => res.json())
-  .then(data => {
-      if (data.accessToken) {
-          localStorage.setItem('accessToken', data.accessToken);
-          // setToken(data.accessToken);
-          naviGate("/");
-      }
-  });
-}
+
 
 
 
