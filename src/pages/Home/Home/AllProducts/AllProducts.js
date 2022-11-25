@@ -14,7 +14,8 @@ const AllProducts = ({ product, setBookProduct }) => {
     location,
     mobile,
     product_name,
-    price
+    price,
+    original_price,
   } = product;
   console.log(product);
 
@@ -38,22 +39,30 @@ const AllProducts = ({ product, setBookProduct }) => {
           <div className="badge badge-outline my-2">
             Communication: {Communication}
           </div>
-          <div className="badge badge-outline my-2">Display: {Display}</div>
+         
           <div className="badge badge-outline my-2">Condition: {condition}</div>
           <div className="badge badge-outline my-2">
             Purchase Year {included}
           </div>
           <div className="badge badge-outline my-2">Location: {location}</div>
-          <div className="">
-            <div className="btn btn-xs btn-primary mr-2">Mobile: {mobile}</div>
-            <div className="btn btn-xs btn-primary">Price: {price}</div>
+          <div className="flex flex-col">
+            <div className="btn btn-xs btn-primary ">Mobile: {mobile}</div>
+            
+              <div className="btn btn-xs btn-primary my-1">
+                Original Price: {original_price}
+              </div>
+              <div className="btn btn-xs btn-primary">
+                Resell Price: {price}
+              </div>
+            
           </div>
 
           <div className="text-center">
             <label
-            onClick={()=> setBookProduct(product)}
-             htmlFor="product-modal"
-              className="btn my-2">
+              onClick={() => setBookProduct(product)}
+              htmlFor="product-modal"
+              className="btn my-2"
+            >
               Book Now
             </label>
           </div>
