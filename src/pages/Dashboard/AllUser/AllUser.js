@@ -29,6 +29,27 @@ const AllUser = () => {
       });
   };
 
+  const handleUserDelete = userId =>{
+    fetch(`http://localhost:5000/users/admin/${userId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem('accessToken')}`
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        
+        console.log(data);
+        if (data.deletedCount > 0) {
+          toast.success("Delete Successful");
+          refetch();
+        }
+      });
+  }
+
+
+
   return (
     <div>
       <h1>All User</h1>
@@ -60,7 +81,7 @@ const AllUser = () => {
                   )}
                 </td>
                 <td>
-                  <button className="btn btn-xs btn-accent">Delete</button>
+                  <button onClick={()=>handleUserDelete(user._id)} className="btn btn-xs btn-accent">Delete</button>
                 </td>
               </tr>
             ))}

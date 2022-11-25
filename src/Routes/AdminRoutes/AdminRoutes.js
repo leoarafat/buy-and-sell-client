@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+
 import { AuthContext } from '../../context/AuthProvider';
 import useAdmin from '../../customHooks/useAdmin';
 
@@ -8,7 +8,7 @@ import useAdmin from '../../customHooks/useAdmin';
 const AdminRoute = ({ children }) => {
     const { user, loading, logOut } = useContext(AuthContext);
     const [isAdmin, isAdminLoading] = useAdmin(user?.email);
-    const location = useLocation();
+    // const location = useLocation();
 
     if (loading || isAdminLoading) {
         return <p>Loading...</p>
