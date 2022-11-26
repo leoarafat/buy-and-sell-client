@@ -6,21 +6,19 @@ import { AuthContext } from "../../context/AuthProvider";
 import useToken from "../../customHooks/useToken";
 
 const Register = () => {
-  
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { createUser, updateUser,googleSignUp } = useContext(AuthContext);
+  const { createUser, updateUser, googleSignUp } = useContext(AuthContext);
   const naviGate = useNavigate();
   const [signUpError, setSignUPError] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [token] = useToken(userEmail)
-  
-  if(token){
-    naviGate('/')
+  const [token] = useToken(userEmail);
+
+  if (token) {
+    naviGate("/");
   }
 
   const handleRegister = (data) => {
@@ -36,7 +34,7 @@ const Register = () => {
         };
         updateUser(userInfo)
           .then(() => {
-            saveUserToDatabase(data.name, data.email, data.role)
+            saveUserToDatabase(data.name, data.email, data.role);
           })
           .catch((err) => console.log(err));
       })
@@ -45,42 +43,58 @@ const Register = () => {
         setSignUPError(error.message);
       });
   };
-//save user data to database
-const saveUserToDatabase = (name, email, role) =>{
-  const user ={name, email, role};
-  fetch('http://localhost:5000/users', {
-      method: 'POST',
+  //save user data to database
+  const saveUserToDatabase = (name, email, role) => {
+    const user = { name, email, role };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
       headers: {
-          'content-type': 'application/json'
+        "content-type": "application/json",
       },
-      body: JSON.stringify(user)
-  })
-  // console.log(user)
-  
-  .then(res => res.json())
-  .then(data =>{
-    setUserEmail(email)
-      // console.log(data)
-      
-      
-  })
-}
+      body: JSON.stringify(user),
+    })
+      // console.log(user)
 
-const handleGoogleSignUp = () =>{
-  googleSignUp()
-  .then((result)=>{
-    const user = result.user 
-    naviGate('/')
-    console.log(user)
-    
-  })
-  .catch(error =>{
-    setSignUPError(error.message)
-  })
-}
+      .then((res) => res.json())
+      .then((data) => {
+        setUserEmail(email);
+        // console.log(data)
+      });
+  };
 
-
-
+  const handleGoogleSignUp = () => {
+    googleSignUp()
+      .then((result) => {
+        const user = result.user;
+        const userEmail = user.email;
+        const name = user.displayName;
+        saveSocialUser(userEmail, name);
+        naviGate("/");
+        console.log(user);
+      })
+      .catch((error) => {
+        setSignUPError(error.message);
+      });
+  };
+  const saveSocialUser = (email, name) => {
+    const user = {
+      email,
+      name,
+      role: "buyer",
+    };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const userEmail = data.email;
+        setUserEmail(userEmail);
+      });
+  };
 
   return (
     <div className="h-[800px] flex justify-center items-center">
@@ -148,8 +162,8 @@ const handleGoogleSignUp = () =>{
               {...register("role")}
               className="select input-bordered w-full max-w-xs"
             >
-              <option >Please Select a role</option>
-              <option value="user">user</option>
+              <option disabled>Please Select a role</option>
+              <option value="buyer">buyer</option>
               <option value="seller">seller</option>
             </select>
           </div>
@@ -164,7 +178,9 @@ const handleGoogleSignUp = () =>{
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button onClick={handleGoogleSignUp} className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
+        <button onClick={handleGoogleSignUp} className="btn btn-outline w-full">
+          CONTINUE WITH GOOGLE
+        </button>
       </div>
     </div>
   );

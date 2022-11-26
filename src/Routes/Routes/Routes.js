@@ -17,6 +17,7 @@ import MyService from "../../pages/MyService/MyService";
 import Register from "../../pages/Register/Register";
 import AdminRoute from "../AdminRoutes/AdminRoutes";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import SellerRoutes from "../SellerRoutes/SellerRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -40,23 +41,20 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
-      {
-        path: "/myService",
-        element: <MyService />,
-      },
+     
       {
         path: "/blog",
         element: <Blog />,
       },
       {
         path: "/addProduct",
-        element: <AddProduct />,
+        element: <AddProduct/>
       },
       {
         path: "/category/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:5000/category/${params.id}`),
-        element: <Category />,
+        element: <Category/>
     },
       {
         path: "/dashboard",
@@ -90,11 +88,11 @@ export const router = createBrowserRouter([
          
           },
           {
-            path: "/dashboard/admin",
+            path: "/dashboard/addProduct",
             element: (
-              <AdminRoute>
-                <AdminPanel />
-              </AdminRoute>
+            
+                <AddProduct />
+            
             ),
           },
         ],

@@ -16,7 +16,10 @@ const Navbar = () => {
         <Link to="/">Home</Link>
       </li>
       <li>
-        <Link to="/myService">My Service</Link>
+        <Link to="/dashboard">Dashboard</Link>
+      </li>
+      <li>
+        <Link to="/blog">Blog</Link>
       </li>
       <>
         {user?.uid ? (
@@ -29,12 +32,6 @@ const Navbar = () => {
           </li>
         )}
       </>
-      <li>
-        <Link to="/dashboard">Dashboard</Link>
-      </li>
-      <li>
-        <Link to="/blog">Blog</Link>
-      </li>
     </>
   );
 
@@ -66,7 +63,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link to="/" className="btn btn-ghost normal-case text-xl">
-          Buy And Sell
+          Buy And Sell Used Product
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
