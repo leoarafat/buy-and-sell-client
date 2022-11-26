@@ -27,7 +27,7 @@ const ProductsCategory = () => {
         </span>
       </button>
       <div className="flex justify-around items-center">
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <div key={category._id}>
             <ul className="menu rounded-box my-1">
               <li className="hover-bordered">

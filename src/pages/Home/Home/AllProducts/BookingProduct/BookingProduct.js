@@ -84,7 +84,7 @@ const BookingProduct = ({ bookProduct, setBookProduct }) => {
             <input
               name="price"
               type="text"
-              defaultValue={bookProduct.price}
+              defaultValue={parseInt(bookProduct.price)}
               disabled
               placeholder="Your Name"
               className="input w-full input-bordered"

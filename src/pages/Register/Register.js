@@ -13,7 +13,7 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUser,googleSignUp } = useContext(AuthContext);
   const naviGate = useNavigate();
   const [signUpError, setSignUPError] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -66,6 +66,18 @@ const saveUserToDatabase = (name, email, role) =>{
   })
 }
 
+const handleGoogleSignUp = () =>{
+  googleSignUp()
+  .then((result)=>{
+    const user = result.user 
+    naviGate('/')
+    console.log(user)
+    
+  })
+  .catch(error =>{
+    setSignUPError(error.message)
+  })
+}
 
 
 
@@ -152,7 +164,7 @@ const saveUserToDatabase = (name, email, role) =>{
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
+        <button onClick={handleGoogleSignUp} className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
       </div>
     </div>
   );

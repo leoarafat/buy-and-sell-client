@@ -10,7 +10,7 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const { signIn } = useContext(AuthContext);
+  const { signIn ,googleSignUp} = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,6 +36,18 @@ const Login = () => {
         setLoginError(error.message);
       });
   };
+  const handleGoogleLogin = () =>{
+    googleSignUp()
+    .then((result)=>{
+      const user = result.user 
+      navigate(from, { replace: true });
+      console.log(user)
+      
+    })
+    .catch(error =>{
+      setLoginError(error.message)
+    })
+  }
 
   return (
     <div className="h-[800px] flex justify-center items-center">
@@ -98,7 +110,7 @@ const Login = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
+        <button onClick={handleGoogleLogin} className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
       </div>
     </div>
   );

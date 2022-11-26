@@ -34,7 +34,7 @@ const MyOrders = () => {
             </tr>
           </thead>
           <tbody>
-            {bookingsProduct.map((product) => (
+            {bookingsProduct?.map((product) => (
               <tr className="hover">
                 <th>{product.name}</th>
                 <td>{product.location}</td>
