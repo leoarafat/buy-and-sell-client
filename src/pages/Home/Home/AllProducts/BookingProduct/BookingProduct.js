@@ -13,6 +13,7 @@ const BookingProduct = ({ bookProduct, setBookProduct }) => {
     const location = form.location.value;
     const email = form.email.value;
     const phone = form.phone.value;
+    const productName = form.productName.value;
     // [3, 4, 5].map((value, i) => console.log(value))
     const booking = {
       name,
@@ -20,7 +21,8 @@ const BookingProduct = ({ bookProduct, setBookProduct }) => {
       location,
       email,
       phone,
-      productName: bookProduct.product_name
+      productNamed: bookProduct.product_name,
+      productName
     };
     // console.log(booking)
     
@@ -65,6 +67,14 @@ const BookingProduct = ({ bookProduct, setBookProduct }) => {
             onSubmit={handleBooking}
             className="grid grid-cols-1 gap-3 mt-10"
           >
+            <input
+              name="productName"
+              type="text"
+              defaultValue={bookProduct.product_name}
+              disabled
+              placeholder="Product Name"
+              className="input w-full input-bordered"
+            />
             <input
               name="name"
               type="text"

@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
+import useAdmin from "../../../../customHooks/useAdmin";
+import { AuthContext } from "../../../../context/AuthProvider";
 const AllProducts = ({ product, setBookProduct }) => {
+  const { user } = useContext(AuthContext);
+  
+  const [isBuyer] = useAdmin(user?.email);
   const {
     image_url,
     included,
@@ -18,8 +23,6 @@ const AllProducts = ({ product, setBookProduct }) => {
   } = product;
   // console.log(product);
   const [LogUser, setLogUser] = useState([]);
-  // console.log(LogUser);
-
   useEffect(() => {
     fetch("http://localhost:5000/users")
       .then((res) => res.json())
@@ -28,23 +31,23 @@ const AllProducts = ({ product, setBookProduct }) => {
       });
   }, []);
 
-  const handleAdvertise = (product)=>{
-    fetch('http://localhost:5000/advertise',{
-      method: "POST",
-      headers:{
-        "content-type": "application/json"
-      },
-      body: JSON.stringify(product)
-    })
-    .then(res => res.json())
-    .then(data =>{
-      console.log(data)
-      if(data.acknowledged){
-        toast.success('advertise successful')
-      }
-      
-    })
-  }
+  // const handleAdvertise = (product)=>{
+  //   fetch('http://localhost:5000/advertise',{
+  //     method: "POST",
+  //     headers:{
+  //       "content-type": "application/json"
+  //     },
+  //     body: JSON.stringify(product)
+  //   })
+  //   .then(res => res.json())
+  //   .then(data =>{
+  //     console.log(data)
+  //     if(data.acknowledged){
+  //       toast.success('advertise successful')
+  //     }
+
+  //   })
+  // }
 
   return (
     <>
@@ -83,17 +86,16 @@ const AllProducts = ({ product, setBookProduct }) => {
               Posted Time: {new Date(time).toLocaleString()}
             </p>
           )}
-          <div className="card-actions flex justify-around items-center mt-2">
-            {LogUser?.role === "seller" && (
-              <button onClick={()=>handleAdvertise(product)} className="btn btn-accent">Advertise</button>
+          <div className="card-actions justify-end">
+            {isBuyer && (
+              <label
+                onClick={() => setBookProduct(product)}
+                htmlFor="product-modal"
+                className="btn my-2"
+              >
+                Book Now
+              </label>
             )}
-            <label
-              onClick={() => setBookProduct(product)}
-              htmlFor="product-modal"
-              className="btn my-2"
-            >
-              Book Now
-            </label>
           </div>
         </div>
       </div>

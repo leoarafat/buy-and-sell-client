@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
@@ -10,7 +10,7 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const { signIn ,googleSignUp} = useContext(AuthContext);
+  const { signIn, googleSignUp, loading } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -18,9 +18,11 @@ const Login = () => {
   const [token] = useToken(loginUserInfo);
 
   const from = location.state?.from?.pathname || "/";
-  if (token) {
-    navigate(from, { replace: true });
-  }
+  useEffect(() => {
+    if (token) {
+      navigate(from, { replace: true });
+    }
+  }, [from, navigate, token]);
 
   const handleLogin = (data) => {
     console.log(data);
@@ -36,18 +38,17 @@ const Login = () => {
         setLoginError(error.message);
       });
   };
-  const handleGoogleLogin = () =>{
+  const handleGoogleLogin = () => {
     googleSignUp()
-    .then((result)=>{
-      const user = result.user 
-      navigate(from, { replace: true });
-      console.log(user)
-      
-    })
-    .catch(error =>{
-      setLoginError(error.message)
-    })
-  }
+      .then((result) => {
+        const user = result.user;
+        navigate(from, { replace: true });
+        console.log(user);
+      })
+      .catch((error) => {
+        setLoginError(error.message);
+      });
+  };
 
   return (
     <div className="h-[800px] flex justify-center items-center">
@@ -110,7 +111,9 @@ const Login = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button onClick={handleGoogleLogin} className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
+        <button onClick={handleGoogleLogin} className="btn btn-outline w-full">
+          CONTINUE WITH GOOGLE
+        </button>
       </div>
     </div>
   );

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import Loader from "../../../../../components/Loader";
+import { AuthContext } from "../../../../../context/AuthProvider";
 
 const AddProduct = () => {
-
-  const [isLoading, setIsLoading] = useState(false)
-
-  
+  const [isLoading, setIsLoading] = useState(false);
+const {user} = useContext(AuthContext)
   const {
     register,
     formState: { errors },
@@ -14,9 +14,8 @@ const AddProduct = () => {
   } = useForm();
   const imgHostKey = process.env.REACT_APP_Iimgbb_key;
 
-
   const handleAddproduct = (data) => {
-    setIsLoading(true)
+    setIsLoading(true);
     const image = data.image[0];
     const formData = new FormData();
     formData.append("image", image);
@@ -40,14 +39,15 @@ const AddProduct = () => {
             description: data.message,
             included: data.included,
             image_url: imgData.data.url,
-            time: new Date()
+            time: new Date(),
+            email: user?.email
           };
-          console.log(addproduct);
+          // console.log(addproduct);
           fetch("http://localhost:5000/addProduct", {
             method: "POST",
             headers: {
               "content-type": "application/json",
-              authorization: `bearer ${localStorage.getItem('accessToken')}`
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
             },
             body: JSON.stringify(addproduct),
           })
@@ -55,14 +55,13 @@ const AddProduct = () => {
             .then((data) => {
               console.log(data);
               toast.success("Product added successfully");
-              setIsLoading(false)
-              
+              setIsLoading(false);
             });
         }
       });
   };
-  if(isLoading){
-    return <progress className="progress w-56 mx-auto"></progress>
+  if (isLoading) {
+    return <Loader/>;
   }
   return (
     <div class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-100 mt-12 mb-12">
@@ -189,7 +188,7 @@ const AddProduct = () => {
           </div>
           <div>
             <label htmlFor="included" className="block dark:text-gray-400">
-            included
+              included
             </label>
             <input
               {...register("included", { required: "included Required" })}

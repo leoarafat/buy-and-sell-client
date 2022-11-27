@@ -5,7 +5,9 @@ import Blog from "../../pages/Blog/Blog";
 import AdminPanel from "../../pages/Dashboard/AdminPanel/AdminPanel";
 import AllUser from "../../pages/Dashboard/AllUser/AllUser";
 import Dashboard from "../../pages/Dashboard/Dashboard/Dashboard";
+import WelcomePage from "../../pages/Dashboard/Dashboard/WelcomePage/WelcomePage";
 import MyOrders from "../../pages/Dashboard/MyOrders/MyOrders";
+import MyProduct from "../../pages/Dashboard/MyProduct/MyProduct";
 import Payment from "../../pages/Dashboard/Payment/Payment";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 import AddProduct from "../../pages/Home/Home/AllProducts/AddProduct/AddProduct";
@@ -41,21 +43,21 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
-     
+
       {
         path: "/blog",
         element: <Blog />,
       },
       {
         path: "/addProduct",
-        element: <AddProduct/>
+        element: <AddProduct />,
       },
       {
         path: "/category/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:5000/category/${params.id}`),
-        element: <Category/>
-    },
+        element: <PrivateRoute><Category /></PrivateRoute>
+      },
       {
         path: "/dashboard",
         errorElement: <ErrorPage />,
@@ -67,7 +69,11 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "/dashboard",
-            element: <MyOrders />,
+            element: <WelcomePage />,
+          },
+          {
+            path: "/dashboard/myOrder",
+            element: <MyOrders />
           },
           {
             path: "/dashboard/allUser",
@@ -79,21 +85,19 @@ export const router = createBrowserRouter([
           },
           {
             path: "/dashboard/payment/:id",
-            element: 
-              <AdminRoute>
-                <Payment />
-              </AdminRoute>,
-              loader:({params})=> fetch(`http://localhost:5000/bookings/${params.id}`)
-              
-         
+            element: (
+             <PrivateRoute><Payment /></PrivateRoute>
+            ),
+            loader: ({ params }) =>
+              fetch(`http://localhost:5000/bookings/${params.id}`),
           },
           {
             path: "/dashboard/addProduct",
-            element: (
-            
-                <AddProduct />
-            
-            ),
+            element: <AddProduct />,
+          },
+          {
+            path: "/dashboard/myProducts",
+            element: <MyProduct />
           },
         ],
       },
