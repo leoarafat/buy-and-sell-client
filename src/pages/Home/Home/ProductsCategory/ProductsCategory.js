@@ -6,7 +6,7 @@ const ProductsCategory = () => {
 //   console.log(categories);
 
   useEffect(() => {
-    fetch("http://localhost:5000/category",{
+    fetch("https://buy-and-sell-server.vercel.app/category",{
       headers:{
         authorization: `bearer ${localStorage.getItem('accessToken')}`
       }

@@ -15,7 +15,7 @@ const CheckOutForm = ({booking}) => {
 
   useEffect(() => {
     
-    fetch("http://localhost:5000/create-payment-intent", {
+    fetch("https://buy-and-sell-server.vercel.app/create-payment-intent", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const CheckOutForm = ({booking}) => {
     });
 
     if (error) {
-      console.log(error);
+      // console.log(error);
       setCardError(error.message);
     } else {
       setCardError("");
@@ -68,10 +68,10 @@ const CheckOutForm = ({booking}) => {
         setCardError(confirmError.message);
         return;
     }
-    console.log(paymentIntent)
+    // console.log(paymentIntent)
     
     if (paymentIntent.status === "succeeded") {
-        console.log('card info', card);
+        // console.log('card info', card);
         
         const payment = {
             price,
@@ -79,7 +79,7 @@ const CheckOutForm = ({booking}) => {
             email,
             bookingId: _id
         }
-        fetch('http://localhost:5000/payments', {
+        fetch('https://buy-and-sell-server.vercel.app/payments', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
@@ -89,7 +89,7 @@ const CheckOutForm = ({booking}) => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    // console.log(data);
                     if (data.insertedId) {
                         setSuccess('Congrats! your payment completed');
                         setTransactionId(paymentIntent.id);

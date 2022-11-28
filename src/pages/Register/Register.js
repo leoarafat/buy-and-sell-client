@@ -46,7 +46,7 @@ const Register = () => {
   //save user data to database
   const saveUserToDatabase = (name, email, role) => {
     const user = { name, email, role };
-    fetch("http://localhost:5000/users", {
+    fetch("https://buy-and-sell-server.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -82,7 +82,7 @@ const Register = () => {
       name,
       role: "buyer",
     };
-    fetch("http://localhost:5000/users", {
+    fetch("https://buy-and-sell-server.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json"

@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../../../../components/Loader";
 import { AuthContext } from "../../../../../context/AuthProvider";
 
 const AddProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
 const {user} = useContext(AuthContext)
+const navigate = useNavigate()
   const {
     register,
     formState: { errors },
@@ -43,7 +45,7 @@ const {user} = useContext(AuthContext)
             email: user?.email
           };
           // console.log(addproduct);
-          fetch("http://localhost:5000/addProduct", {
+          fetch("https://buy-and-sell-server.vercel.app/addProduct", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -54,8 +56,13 @@ const {user} = useContext(AuthContext)
             .then((res) => res.json())
             .then((data) => {
               console.log(data);
-              toast.success("Product added successfully");
-              setIsLoading(false);
+              if(data.acknowledged){
+                navigate('/dashboard/myProducts')
+                toast.success("Product added successfully");
+                setIsLoading(false);
+
+              }
+              
             });
         }
       });

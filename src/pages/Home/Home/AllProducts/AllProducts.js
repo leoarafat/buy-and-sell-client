@@ -1,13 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
-import toast from "react-hot-toast";
-import useAdmin from "../../../../customHooks/useAdmin";
+import {
+  CheckCircleIcon,
+  HeartIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/24/solid";
+import axios from "axios";
+
 import { AuthContext } from "../../../../context/AuthProvider";
+import useBuyer from "../../../../customHooks/useBuyer";
+import toast from "react-hot-toast";
+import ReportModal from "../Reportmodal/ReportModal";
 const AllProducts = ({ product, setBookProduct }) => {
   const { user } = useContext(AuthContext);
-  
-  const [isBuyer] = useAdmin(user?.email);
+  const [reportModal, setReportModal] = useState(null);
+  const [isBuyer] = useBuyer(user?.email);
   const {
+    
     image_url,
     included,
     location,
@@ -23,35 +31,55 @@ const AllProducts = ({ product, setBookProduct }) => {
   } = product;
   // console.log(product);
   const [LogUser, setLogUser] = useState([]);
+
   useEffect(() => {
-    fetch("http://localhost:5000/users")
-      .then((res) => res.json())
-      .then((data) => {
-        data.map((dt) => setLogUser(dt));
-      });
+    axios.get("https://buy-and-sell-server.vercel.app/users").then((data) => {
+      // console.log(data.data);
+      const userData = data.data;
+      const dataMap = userData.map((dt) => setLogUser(dt));
+      return dataMap;
+    });
   }, []);
 
-  // const handleAdvertise = (product)=>{
-  //   fetch('http://localhost:5000/advertise',{
-  //     method: "POST",
-  //     headers:{
-  //       "content-type": "application/json"
-  //     },
-  //     body: JSON.stringify(product)
-  //   })
-  //   .then(res => res.json())
-  //   .then(data =>{
-  //     console.log(data)
-  //     if(data.acknowledged){
-  //       toast.success('advertise successful')
-  //     }
+  const handleWishList = (item) => {
+    fetch("https://buy-and-sell-server.vercel.app/wishlist", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(item),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data)
+        if (data.acknowledged) {
+          toast.success("WishList Added successful");
+        }
+      });
+  };
 
-  //   })
-  // }
+
 
   return (
-    <>
+    <div>
       <div className="card w-full glass">
+        {isBuyer && (
+          <div className="flex justify-end">
+            <h1>
+              <button onClick={() => handleWishList(product)}>
+                <HeartIcon className="w-[30px]" />
+              </button>
+            </h1>
+            <h1>
+              <button>
+                <label htmlFor="reportModal">
+                  {" "}
+                  <ExclamationCircleIcon className="w-[30px]" />
+                </label>
+              </button>
+            </h1>
+          </div>
+        )}
         <figure>
           <img className="h-[350px]" src={image_url} alt="laptop!" />
         </figure>
@@ -86,8 +114,8 @@ const AllProducts = ({ product, setBookProduct }) => {
               Posted Time: {new Date(time).toLocaleString()}
             </p>
           )}
-          <div className="card-actions justify-end">
-            {isBuyer && (
+          {isBuyer ? (
+            <div className="card-actions justify-end">
               <label
                 onClick={() => setBookProduct(product)}
                 htmlFor="product-modal"
@@ -95,11 +123,22 @@ const AllProducts = ({ product, setBookProduct }) => {
               >
                 Book Now
               </label>
-            )}
-          </div>
+            </div>
+          ) : (
+            <p className="text text-red-500 text-xl">
+              Only Buyer can order this item
+            </p>
+          )}
         </div>
       </div>
-    </>
+      {
+        <ReportModal
+          reportModal={reportModal}
+          setReportModal={setReportModal}
+          
+        />
+      }
+    </div>
   );
 };
 

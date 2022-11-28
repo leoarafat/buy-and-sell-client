@@ -20,7 +20,7 @@ const Footer = () => {
           <p>
             AP Industries Ltd.
             <br />
-            Providing reliable tech since 2021
+            All Rights Reserved AP
           </p>
         </div>
         <div>

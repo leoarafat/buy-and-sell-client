@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import Loader from '../../../components/Loader';
 import { AuthContext } from '../../../context/AuthProvider';
 import MyProductsCard from './MyProductsCard';
 
@@ -8,7 +9,7 @@ const MyProduct = () => {
 
     const { user } = useContext(AuthContext);
 
-    const url = `http://localhost:5000/myProducts?email=${user?.email}`;
+    const url = `https://buy-and-sell-server.vercel.app/myProducts?email=${user?.email}`;
 
     const { data: myProducts = [], isLoading, refetch } = useQuery({
         queryKey: ['myProducts', user?.email],
@@ -23,12 +24,12 @@ const MyProduct = () => {
         }
     })
     if (isLoading) {
-        return <p>Loading</p>
+        return <Loader/>
     }
 console.log(myProducts)
 
     return (
-        <div>
+        <div className='grid md:grid-cols-2 gap-3 w-[1200px] mx-auto'>
           
             {
                 myProducts.map(singleProduct =>
@@ -111,7 +112,7 @@ export default MyProduct;
 //     const { _id, category_id, name, img, warranty, used, location, originalPrice, time, resalePrice, condition, description } = singleProduct;
 
 //     const handleDelete = id => {
-//         fetch(`http://localhost:5000/users/seller/${id}`, {
+//         fetch(`https://buy-and-sell-server.vercel.app/users/seller/${id}`, {
 //             method: 'DELETE',
 //             headers: {
 //                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -148,7 +149,7 @@ export default MyProduct;
 //             email: userEmail
 //         };
 
-//         fetch('http://localhost:5000/advertisedItems', {
+//         fetch('https://buy-and-sell-server.vercel.app/advertisedItems', {
 //             method: 'POST',
 //             headers: {
 //                 'content-type': 'application/json'

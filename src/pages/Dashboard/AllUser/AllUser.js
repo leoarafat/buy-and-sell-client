@@ -6,14 +6,14 @@ const AllUser = () => {
   const { data: userData, refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users");
+      const res = await fetch("https://buy-and-sell-server.vercel.app/users");
       const data = await res.json();
       return data;
     },
   });
 
   const handleMakeAdmin = (userId) => {
-    fetch(`http://localhost:5000/users/admin/${userId}`, {
+    fetch(`https://buy-and-sell-server.vercel.app/users/admin/${userId}`, {
       method: "PUT",
       headers: {
         authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -21,7 +21,7 @@ const AllUser = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.modifiedCount > 0) {
           toast.success("Verified Successful");
           refetch();
@@ -30,7 +30,7 @@ const AllUser = () => {
   };
 
   const handleUserDelete = userId =>{
-    fetch(`http://localhost:5000/users/admin/${userId}`, {
+    fetch(`https://buy-and-sell-server.vercel.app/users/admin/${userId}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -38,9 +38,9 @@ const AllUser = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         
-        console.log(data);
+        // console.log(data);
         if (data.deletedCount > 0) {
           toast.success("Delete Successful");
           refetch();
@@ -66,8 +66,8 @@ const AllUser = () => {
             </tr>
           </thead>
           <tbody>
-            {userData?.map((user) => (
-              <tr className="hover">
+            {userData?.map((user,i) => (
+              <tr key={i} className="hover">
                 <th>{user.name}</th>
                 <td>{user.email}</td>
                 <td>{user.role}</td>

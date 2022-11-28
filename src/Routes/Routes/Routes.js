@@ -2,10 +2,14 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout/DashboardLayout";
 import Main from "../../Layout/Main/Main";
 import Blog from "../../pages/Blog/Blog";
-import AdminPanel from "../../pages/Dashboard/AdminPanel/AdminPanel";
+import AllBuyer from "../../pages/Dashboard/AllBuyer/AllBuyer";
+import AllSeller from "../../pages/Dashboard/AllSeller/AllSeller";
+
 import AllUser from "../../pages/Dashboard/AllUser/AllUser";
-import Dashboard from "../../pages/Dashboard/Dashboard/Dashboard";
-import WelcomePage from "../../pages/Dashboard/Dashboard/WelcomePage/WelcomePage";
+import ReportPage from "../../pages/Dashboard/Dashboard/ReportPage/ReportPage";
+
+
+import WishList from "../../pages/Dashboard/Dashboard/WishList/WishList";
 import MyOrders from "../../pages/Dashboard/MyOrders/MyOrders";
 import MyProduct from "../../pages/Dashboard/MyProduct/MyProduct";
 import Payment from "../../pages/Dashboard/Payment/Payment";
@@ -15,11 +19,11 @@ import AddProduct from "../../pages/Home/Home/AllProducts/AddProduct/AddProduct"
 import Category from "../../pages/Home/Home/Category/Category";
 import Home from "../../pages/Home/Home/Home";
 import Login from "../../pages/Login/Login";
-import MyService from "../../pages/MyService/MyService";
+
 import Register from "../../pages/Register/Register";
 import AdminRoute from "../AdminRoutes/AdminRoutes";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
-import SellerRoutes from "../SellerRoutes/SellerRoutes";
+
 
 export const router = createBrowserRouter([
   {
@@ -55,7 +59,7 @@ export const router = createBrowserRouter([
       {
         path: "/category/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/category/${params.id}`),
+          fetch(`https://buy-and-sell-server.vercel.app/category/${params.id}`),
         element: <PrivateRoute><Category /></PrivateRoute>
       },
       {
@@ -67,10 +71,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         children: [
-          {
-            path: "/dashboard",
-            element: <WelcomePage />,
-          },
+        
           {
             path: "/dashboard/myOrder",
             element: <MyOrders />
@@ -84,12 +85,36 @@ export const router = createBrowserRouter([
             ),
           },
           {
+            path: "/dashboard/reportPage",
+            element: (
+              <AdminRoute>
+                <ReportPage />
+              </AdminRoute>
+            ),
+          },
+          {
+            path: "/dashboard/allSeller",
+            element: (
+              <AdminRoute>
+                <AllSeller />
+              </AdminRoute>
+            ),
+          },
+          {
+            path: "/dashboard/allBuyer",
+            element: (
+              <AdminRoute>
+                <AllBuyer />
+              </AdminRoute>
+            ),
+          },
+          {
             path: "/dashboard/payment/:id",
             element: (
              <PrivateRoute><Payment /></PrivateRoute>
             ),
             loader: ({ params }) =>
-              fetch(`http://localhost:5000/bookings/${params.id}`),
+              fetch(`https://buy-and-sell-server.vercel.app/bookings/${params.id}`),
           },
           {
             path: "/dashboard/addProduct",
@@ -98,6 +123,10 @@ export const router = createBrowserRouter([
           {
             path: "/dashboard/myProducts",
             element: <MyProduct />
+          },
+          {
+            path: "/dashboard/wishlist",
+            element: <WishList/>
           },
         ],
       },

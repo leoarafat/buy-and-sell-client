@@ -1,12 +1,16 @@
 import { CheckCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../../context/AuthProvider";
+import useSeller from "../../../customHooks/useSeller";
 
 
 const MyProductsCard = ({ singleProduct, refetch }) => {
   const [LogUser, setLogUser] = useState([]);
+  const {user} = useContext(AuthContext)
+  const [isSeller] = useSeller(user?.email)
   useEffect(() => {
-    fetch("http://localhost:5000/users")
+    fetch("https://buy-and-sell-server.vercel.app/users")
       .then((res) => res.json())
       .then((data) => {
         data.map((dt) => setLogUser(dt));
@@ -14,7 +18,7 @@ const MyProductsCard = ({ singleProduct, refetch }) => {
   }, []);
   const {
     _id,
-    category_id,
+    
     image_url,
     included,
     location,
@@ -29,48 +33,27 @@ const MyProductsCard = ({ singleProduct, refetch }) => {
     seller_name,
   } = singleProduct;
 
-  // const handleDelete = id => {
-  //     fetch(`http://localhost:5000/users/seller/${id}`, {
-  //         method: 'DELETE',
-  //         headers: {
-  //             authorization: `bearer ${localStorage.getItem('accessToken')}`
-  //         }
-  //     })
-  //         .then(res => res.json())
-  //         .then(data => {
-  //             console.log(data);
-  //             if (data.deletedCount > 0) {
-  //                 toast.success('Deleted successfully');
-  //                 refetch();
-  //             }
-  //         })
-  // };
+  const handleDelete = id => {
+      fetch(`https://buy-and-sell-server.vercel.app/users/seller/${id}`, {
+          method: 'DELETE',
+          headers: {
+              authorization: `bearer ${localStorage.getItem('accessToken')}`
+          }
+      })
+          .then(res => res.json())
+          .then(data => {
+              console.log(data);
+              if (data.deletedCount > 0) {
+                  toast.success('Deleted successfully');
+                  refetch();
+              }
+          })
+  };
 
-  // const { user } = useContext(AuthContext);
-  // const sellername = user?.displayName;
-  // const userEmail = user?.email;
-  // const handleAdvertising = () => {
-
-  //     const addedProduct = {
-  //         _id: _id,
-  //         name: name,
-  //         category_id: category_id,
-  //         warranty: warranty,
-  //         used: used,
-  //         sellerName: sellername,
-  //         location: location,
-  //         condition: condition,
-  //         originalPrice: originalPrice,
-  //         resalePrice: resalePrice,
-  //         img: img,
-  //         description: description,
-  //         email: userEmail
-  //     };
-
-
+  
 
    const handleAdvertise = (product)=>{
-    fetch('http://localhost:5000/advertise',{
+    fetch('https://buy-and-sell-server.vercel.app/advertise',{
       method: "POST",
       headers:{
         "content-type": "application/json"
@@ -125,7 +108,7 @@ const MyProductsCard = ({ singleProduct, refetch }) => {
             <button onClick={()=>handleAdvertise(singleProduct)} className="btn btn-primary">Advertise Item</button>
             <div className="flex items-center">
                 <p></p>
-                <TrashIcon className="w-[50px] h-[50px]"/>
+                <TrashIcon onClick={()=>handleDelete(_id)} className="w-[50px] h-[50px]"/>
             </div>
         </div>
       </div>
