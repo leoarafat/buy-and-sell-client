@@ -1,28 +1,36 @@
-import React from 'react';
+import React from "react";
+import { useContext } from "react";
+import AwesomeLoader from "../../../components/AwesomeLoader";
+import { AuthContext } from "../../../context/AuthProvider";
+import useTitle from "../../../customHooks/useTitle";
+import New from "../../../New";
+import BuyAndSell from "../BuyAndSell/BuyAndSell";
+import Contact from "../Contact/Contact";
 
-
-
-import Banner from '../Banner/Banner';
-import Contact from '../Contact/Contact';
-import DiscountPage from '../DiscountPage/DiscountPage';
-import AdvertiseItem from './AdvertiseItem/AdvertiseItem';
-import Carasoul from './Carasoul/Carasoul';
-import ProductsCategory from './ProductsCategory/ProductsCategory';
+import AdvertiseItem from "./AdvertiseItem/AdvertiseItem";
+import Carasoul from "./Carasoul/Carasoul";
+import ProductsCategory from "./ProductsCategory/ProductsCategory";
+import UserReview from "./userReview/UserReview";
 
 const Home = () => {
-    
-    // console.log(data)
-    
-    return (
-        <div>
-            <Banner/>
-            <ProductsCategory/>
-            <DiscountPage/>
-            <AdvertiseItem/>
-            <Contact/>
-            <Carasoul/>
-        </div>
-    );
+  useTitle('home')
+  const { loading } = useContext(AuthContext);
+  if (loading) {
+    return <AwesomeLoader />;
+  }
+
+  return (
+    <div>
+      <Carasoul />
+      <BuyAndSell />
+      {/* <Banner /> */}
+      <ProductsCategory />
+      <AdvertiseItem />
+      <UserReview />
+      <Contact />
+      {/* <New/> */}
+    </div>
+  );
 };
 
 export default Home;

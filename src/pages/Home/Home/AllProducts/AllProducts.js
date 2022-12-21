@@ -10,12 +10,14 @@ import { AuthContext } from "../../../../context/AuthProvider";
 import useBuyer from "../../../../customHooks/useBuyer";
 import toast from "react-hot-toast";
 import ReportModal from "../Reportmodal/ReportModal";
+import AwesomeLoader from "../../../../components/AwesomeLoader";
+import useTitle from "../../../../customHooks/useTitle";
 const AllProducts = ({ product, setBookProduct }) => {
-  const { user } = useContext(AuthContext);
+  useTitle('products')
+  const { user, loading } = useContext(AuthContext);
   const [reportModal, setReportModal] = useState(null);
   const [isBuyer] = useBuyer(user?.email);
   const {
-    
     image_url,
     included,
     location,
@@ -58,7 +60,9 @@ const AllProducts = ({ product, setBookProduct }) => {
       });
   };
 
-
+  if (loading) {
+    return <AwesomeLoader />;
+  }
 
   return (
     <div>
@@ -135,7 +139,6 @@ const AllProducts = ({ product, setBookProduct }) => {
         <ReportModal
           reportModal={reportModal}
           setReportModal={setReportModal}
-          
         />
       }
     </div>

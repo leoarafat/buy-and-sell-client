@@ -2,10 +2,13 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../../../../components/Loader";
+import AwesomeLoader from "../../../../../components/AwesomeLoader";
+
 import { AuthContext } from "../../../../../context/AuthProvider";
+import useTitle from "../../../../../customHooks/useTitle";
 
 const AddProduct = () => {
+  useTitle('addproducts')
   const [isLoading, setIsLoading] = useState(false);
 const {user} = useContext(AuthContext)
 const navigate = useNavigate()
@@ -68,7 +71,7 @@ const navigate = useNavigate()
       });
   };
   if (isLoading) {
-    return <Loader/>;
+    return <AwesomeLoader/>;
   }
   return (
     <div class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-100 mt-12 mb-12">

@@ -10,19 +10,23 @@ import {
   PlusCircleIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
+import AwesomeLoader from "../../components/AwesomeLoader";
+import useTitle from "../../customHooks/useTitle";
+
 const DashboardLayout = () => {
+  useTitle('dashboard')
   const { user, logOut } = useContext(AuthContext);
   const [isAdmin, isAdminLoading] = useAdmin(user?.email);
   const [isSeller, isSellerLoading] = useSeller(user?.email);
   const [isBuyer, isBuyerLoading] = useBuyer(user?.email);
   if (isAdminLoading) {
-    return <Loader />;
+    return <AwesomeLoader />;
   }
   if (isSellerLoading) {
-    return <Loader />;
+    return <AwesomeLoader />;
   }
   if (isBuyerLoading) {
-    return <Loader />;
+    return <AwesomeLoader />;
   }
   const handleLogOut = () => {
     logOut()
@@ -231,7 +235,7 @@ const DashboardLayout = () => {
                       href="#"
                       className="text-xs hover:underline dark:text-gray-400"
                     >
-                      View profile
+                      {user?.email}
                     </Link>
                   </span>
                 </div>

@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import useTitle from '../../../../customHooks/useTitle';
 import ReportCard from './ReportCard';
 
 const ReportPage = () => {
+  useTitle('reported')
     const { data: userReport, refetch } = useQuery({
         queryKey: ["report"],
         queryFn: async () => {

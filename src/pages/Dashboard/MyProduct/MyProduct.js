@@ -1,11 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import AwesomeLoader from '../../../components/AwesomeLoader';
 import Loader from '../../../components/Loader';
 import { AuthContext } from '../../../context/AuthProvider';
+import useTitle from '../../../customHooks/useTitle';
 import MyProductsCard from './MyProductsCard';
 
 
 const MyProduct = () => {
+    useTitle('myproducts')
 
     const { user } = useContext(AuthContext);
 
@@ -24,12 +27,12 @@ const MyProduct = () => {
         }
     })
     if (isLoading) {
-        return <Loader/>
+        return <AwesomeLoader/>
     }
 console.log(myProducts)
 
     return (
-        <div className='grid md:grid-cols-2 gap-3 w-[1200px] mx-auto'>
+        <div className='grid md:grid-cols-2 gap-3 mx-auto'>
           
             {
                 myProducts.map(singleProduct =>

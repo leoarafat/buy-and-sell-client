@@ -9,14 +9,14 @@ const Login = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+  } = useForm()
   const { signIn, googleSignUp, loading } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
   const [loginUserInfo, setLoginUserInfo] = useState("");
   const [token] = useToken(loginUserInfo);
-
+  
   const from = location.state?.from?.pathname || "/";
   useEffect(() => {
     if (token) {
@@ -50,6 +50,7 @@ const Login = () => {
       });
   };
 
+  
   return (
     <div className="h-[800px] flex justify-center items-center">
       <div className="w-96 p-7">

@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import AwesomeLoader from "../../../../../components/AwesomeLoader";
 import { AuthContext } from "../../../../../context/AuthProvider";
 
 const BookingProduct = ({ bookProduct, setBookProduct }) => {
   // console.log(bookProduct)
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const handleBooking = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -22,35 +23,33 @@ const BookingProduct = ({ bookProduct, setBookProduct }) => {
       email,
       phone,
       productNamed: bookProduct.product_name,
-      productName
+      productName,
     };
     // console.log(booking)
-    
-    fetch('https://buy-and-sell-server.vercel.app/bookings', {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json',
-            authorization: `bearer ${localStorage.getItem('accessToken')}`
-        },
-        body: JSON.stringify(booking)
+
+    fetch("https://buy-and-sell-server.vercel.app/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(booking),
     })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if (data.acknowledged) {
-                setBookProduct(null)
-                toast.success('Booking confirmed');
-                // refetch();
-            }
-            else{
-                toast.error(data.message);
-            }
-        })
-
-
-    
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          setBookProduct(null);
+          toast.success("Booking confirmed");
+          // refetch();
+        } else {
+          toast.error(data.message);
+        }
+      });
   };
-
+  if (loading) {
+    return <AwesomeLoader />;
+  }
   return (
     <div>
       <input type="checkbox" id="product-modal" className="modal-toggle" />
@@ -100,14 +99,14 @@ const BookingProduct = ({ bookProduct, setBookProduct }) => {
               className="input w-full input-bordered"
             />
             <input
-            required
+              required
               name="location"
               type="text"
               placeholder="Location"
               className="input w-full input-bordered"
             />
             <input
-            required
+              required
               name="phone"
               type="text"
               placeholder="Phone Number"

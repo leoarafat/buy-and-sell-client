@@ -71,7 +71,7 @@ const MyProductsCard = ({ singleProduct, refetch }) => {
   }
 
   return (
-    <div className="card w-full glass">
+    <div className="card  glass">
       <figure>
         <img className="h-[350px]" src={image_url} alt="laptop!" />
       </figure>
