@@ -45,6 +45,7 @@ const ProductsCategory = () => {
           </div>
         ))}
       </div>
+
     </div>
   );
 };

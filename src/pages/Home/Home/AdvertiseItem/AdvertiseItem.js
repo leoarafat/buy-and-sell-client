@@ -38,7 +38,7 @@ const AdvertiseItem = () => {
         <>
           <h1 className="text-4xl text-center my-3">Advertise Products</h1>
 
-          <div className="grid md:grid-cols-2 my-3">
+          <div className="flex justify-around items-center my-3 mx-auto">
             {adverTise?.map((advertise) => (
               <AdvertiseCard handleDelete={handleDelete} key={advertise._id} advertise={advertise} />
 

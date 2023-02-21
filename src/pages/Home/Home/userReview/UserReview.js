@@ -8,14 +8,9 @@ import "swiper/css";
 const UserReview = () => {
   return (
     <div className="">
+      <h1 className="text-3xl font-semibold text-center mb-33">Customer Review</h1>
       <Swiper
-        // slidesPerView={"auto"}
-        // spaceBetween={30}
-        // pagination={{
-        //   clickable: true,
-        // }}
-        // modules={[Pagination]}
-        // className="mySwiper"
+
         slidesPerView={'auto'}
         spaceBetween={30}
         centeredSlides={true}
