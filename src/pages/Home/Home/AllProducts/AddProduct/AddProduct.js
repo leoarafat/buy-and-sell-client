@@ -17,6 +17,7 @@ const navigate = useNavigate()
     formState: { errors },
     handleSubmit,
   } = useForm();
+  
   const imgHostKey = process.env.REACT_APP_Iimgbb_key;
 
   const handleAddproduct = (data) => {
@@ -74,9 +75,9 @@ const navigate = useNavigate()
     return <AwesomeLoader/>;
   }
   return (
-    <div class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-100 mt-12 mb-12">
+    <div className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-100 mt-12 mb-12">
       <form onSubmit={handleSubmit(handleAddproduct)}>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 items-center">
+        <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 items-center">
           <div>
             <label htmlFor="name" className="block dark:text-gray-400">
               Product Name*

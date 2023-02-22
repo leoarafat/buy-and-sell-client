@@ -4,26 +4,20 @@ import Main from "../../Layout/Main/Main";
 import Blog from "../../pages/Blog/Blog";
 import AllBuyer from "../../pages/Dashboard/AllBuyer/AllBuyer";
 import AllSeller from "../../pages/Dashboard/AllSeller/AllSeller";
-
 import AllUser from "../../pages/Dashboard/AllUser/AllUser";
 import ReportPage from "../../pages/Dashboard/Dashboard/ReportPage/ReportPage";
-
-
 import WishList from "../../pages/Dashboard/Dashboard/WishList/WishList";
 import MyOrders from "../../pages/Dashboard/MyOrders/MyOrders";
 import MyProduct from "../../pages/Dashboard/MyProduct/MyProduct";
 import Payment from "../../pages/Dashboard/Payment/Payment";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 import AddProduct from "../../pages/Home/Home/AllProducts/AddProduct/AddProduct";
-
 import Category from "../../pages/Home/Home/Category/Category";
 import Home from "../../pages/Home/Home/Home";
 import Login from "../../pages/Login/Login";
-
 import Register from "../../pages/Register/Register";
 import AdminRoute from "../AdminRoutes/AdminRoutes";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
-
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +30,7 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/",
+        path: "/home",
         element: <Home />,
       },
       {
@@ -60,7 +54,11 @@ export const router = createBrowserRouter([
         path: "/category/:id",
         loader: ({ params }) =>
           fetch(`https://buy-and-sell-server.vercel.app/category/${params.id}`),
-        element: <PrivateRoute><Category /></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Category />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard",
@@ -71,10 +69,9 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         children: [
-        
           {
             path: "/dashboard/myOrder",
-            element: <MyOrders />
+            element: <MyOrders />,
           },
           {
             path: "/dashboard/allUser",
@@ -111,10 +108,14 @@ export const router = createBrowserRouter([
           {
             path: "/dashboard/payment/:id",
             element: (
-             <PrivateRoute><Payment /></PrivateRoute>
+              <PrivateRoute>
+                <Payment />
+              </PrivateRoute>
             ),
             loader: ({ params }) =>
-              fetch(`https://buy-and-sell-server.vercel.app/bookings/${params.id}`),
+              fetch(
+                `https://buy-and-sell-server.vercel.app/bookings/${params.id}`
+              ),
           },
           {
             path: "/dashboard/addProduct",
@@ -122,11 +123,11 @@ export const router = createBrowserRouter([
           },
           {
             path: "/dashboard/myProducts",
-            element: <MyProduct />
+            element: <MyProduct />,
           },
           {
             path: "/dashboard/wishlist",
-            element: <WishList/>
+            element: <WishList />,
           },
         ],
       },

@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../context/AuthProvider";
-
 import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
-import Lottie from 'lottie-react';
-import NavAnim from '../../../../Animation/NavAnim.json'
+import Lottie from "lottie-react";
+import NavAnim from "../../../../Animation/NavAnim.json";
 const Navbar = () => {
-  
   const { user, logOut } = useContext(AuthContext);
   // console.log(user);
   const handleLogOut = () => {
@@ -15,37 +13,34 @@ const Navbar = () => {
       .catch((err) => console.log(err));
   };
 
+  const [dark, setDark] = useState(false);
 
-const [dark, setDark] = useState(false)
+  const handleDark = () => {
+    setDark(!dark);
+    localStorage.setItem("dark-mode", !dark);
+  };
 
-const handleDark = ()=>{
-    setDark(!dark)
-    localStorage.setItem('dark-mode', !dark)
-}
-
-useEffect(()=>{
-    const localDark = JSON.parse(localStorage.getItem('dark-mode'))
-    setDark(localDark)
-},[])
-useEffect(()=>{
-    if(dark){
-        document.querySelector('html').setAttribute('data-theme', 'dark')
+  useEffect(() => {
+    const localDark = JSON.parse(localStorage.getItem("dark-mode"));
+    setDark(localDark);
+  }, []);
+  useEffect(() => {
+    if (dark) {
+      document.querySelector("html").setAttribute("data-theme", "dark");
+    } else {
+      document.querySelector("html").setAttribute("data-theme", "mytheme");
     }
-    else{
-        document.querySelector('html').setAttribute('data-theme', 'mytheme')
-    }
-},[dark])
-//
+  }, [dark]);
 
   const navbarItems = (
     <>
-<div className="flex items-center">
-<div className="h-8 w-8" onClick={handleDark}>
-        {dark ? <SunIcon/> : <MoonIcon />}
+      <div className="flex items-center">
+        <div className="h-8 w-8" onClick={handleDark}>
+          {dark ? <SunIcon /> : <MoonIcon />}
+        </div>
       </div>
-</div>
       <li>
-        <Link className="font-semibold" to="/">
+        <Link className="font-semibold" to="/home">
           Home
         </Link>
       </li>
@@ -108,7 +103,10 @@ useEffect(()=>{
           </ul>
         </div>
         <div className="flex">
-        <Lottie className='w-full h-[70px] hidden lg:block' animationData={NavAnim}></Lottie>
+          <Lottie
+            className="w-full h-[70px] hidden lg:block"
+            animationData={NavAnim}
+          ></Lottie>
           <Link to="/" className="btn btn-ghost normal-case text-xl">
             Buy And Sell Used Laptop
           </Link>

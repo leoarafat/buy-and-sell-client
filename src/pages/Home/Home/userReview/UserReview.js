@@ -116,7 +116,7 @@ const UserReview = () => {
               <div className="flex space-x-4">
                 <div>
                   <img
-                    src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkyMjkwNTI2MDAxNjM2NTg4/michael-jackson-gettyimages-89446104.jpg"
+                    src="https://www.varietyinsight.com/images/honoree/Dwayne_Johnson.png"
                     alt=""
                     className="object-cover w-12 h-12 rounded-full dark:bg-gray-500"
                   />
@@ -161,7 +161,7 @@ const UserReview = () => {
               <div className="flex space-x-4">
                 <div>
                   <img
-                    src="https://images2.minutemediacdn.com/image/upload/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/shape/cover/sport/https-3A-2F-2Fthesmokingcuban-com-2Fwp-content-2Fuploads-2Fgetty-images-2F2017-2F07-2F1192211772-850x560-67c1ff5b077e747ca93c97aa6875b60e.jpg"
+                    src="https://www.varietyinsight.com/images/honoree/Dwayne_Johnson.png"
                     alt=""
                     className="object-cover w-12 h-12 rounded-full dark:bg-gray-500"
                   />
@@ -206,7 +206,7 @@ const UserReview = () => {
               <div className="flex space-x-4">
                 <div>
                   <img
-                    src="https://variety.com/wp-content/uploads/2017/09/justin_bieber.png"
+                    src="https://www.varietyinsight.com/images/honoree/Dwayne_Johnson.png"
                     alt=""
                     className="object-cover w-12 h-12 rounded-full dark:bg-gray-500"
                   />

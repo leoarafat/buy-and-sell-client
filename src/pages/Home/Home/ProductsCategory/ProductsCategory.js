@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AwesomeLoader from "../../../../components/AwesomeLoader";
-import Loader from "../../../../components/Loader";
+
 
 const ProductsCategory = () => {
   const [categories, setCategories] = useState([]);

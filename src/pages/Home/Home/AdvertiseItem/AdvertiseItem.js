@@ -40,13 +40,15 @@ const AdvertiseItem = () => {
 
           <div className="flex justify-around items-center my-3 mx-auto">
             {adverTise?.map((advertise) => (
-              <AdvertiseCard handleDelete={handleDelete} key={advertise._id} advertise={advertise} />
-
+              <AdvertiseCard
+                handleDelete={handleDelete}
+                key={advertise._id}
+                advertise={advertise}
+              />
             ))}
           </div>
         </>
       )}
-
     </section>
   );
 };
