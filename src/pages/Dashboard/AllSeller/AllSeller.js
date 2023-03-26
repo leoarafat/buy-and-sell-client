@@ -1,36 +1,13 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import useTitle from "../../../customHooks/useTitle";
+import useSellers from "../../../customHooks/useSellers";
+import Loader from "../../../components/Loader";
 
 const AllSeller = () => {
-  useTitle('allseller')
-  const { data: users = [], refetch } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await fetch("https://buy-and-sell-server.vercel.app/users");
-      const data = await res.json();
-      return data;
-    },
-  });
-
-  const handleUserDelete = userId =>{
-    fetch(`https://buy-and-sell-server.vercel.app/users/admin/${userId}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `bearer ${localStorage.getItem('accessToken')}`
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data)
-        
-        // console.log(data);
-        if (data.deletedCount > 0) {
-          toast.success("Delete Successful");
-          refetch();
-        }
-      });
+  useTitle("allseller");
+  const { users, isLoading, handleUserDelete } = useSellers();
+  if (isLoading) {
+    return <Loader />;
   }
   return (
     <div>
@@ -55,7 +32,14 @@ const AllSeller = () => {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.role}</td>
-                    <td><button onClick={()=>handleUserDelete(user._id)} className="btn btn-xs btn-primary">Delete</button></td>
+                    <td>
+                      <button
+                        onClick={() => handleUserDelete(user._id)}
+                        className="btn btn-xs btn-primary"
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </>
                 )}
               </tr>

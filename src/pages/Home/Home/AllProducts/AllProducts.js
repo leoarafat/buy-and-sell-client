@@ -13,7 +13,7 @@ import ReportModal from "../Reportmodal/ReportModal";
 import AwesomeLoader from "../../../../components/AwesomeLoader";
 import useTitle from "../../../../customHooks/useTitle";
 const AllProducts = ({ product, setBookProduct }) => {
-  useTitle('products')
+  useTitle("products");
   const { user, loading } = useContext(AuthContext);
   const [reportModal, setReportModal] = useState(null);
   const [isBuyer] = useBuyer(user?.email);
@@ -66,75 +66,89 @@ const AllProducts = ({ product, setBookProduct }) => {
 
   return (
     <div>
-      <div className="card w-full glass">
-        {isBuyer && (
-          <div className="flex justify-end">
-            <h1>
-              <button onClick={() => handleWishList(product)}>
-                <HeartIcon className="w-[30px]" />
-              </button>
-            </h1>
-            <h1>
-              <button>
-                <label htmlFor="reportModal">
-                  {" "}
-                  <ExclamationCircleIcon className="w-[30px]" />
-                </label>
-              </button>
-            </h1>
-          </div>
-        )}
-        <figure>
-          <img className="h-[350px]" src={image_url} alt="laptop!" />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title text-3xl">{product_name}</h2>
+<div className="card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out card-container h-full">
+  {isBuyer && (
+    <div className="flex justify-end">
+      <h1>
+        <button onClick={() => handleWishList(product)}>
+          <HeartIcon className="w-[30px]" />
+        </button>
+      </h1>
+      <h1>
+        <button>
+          <label htmlFor="reportModal">
+            {" "}
+            <ExclamationCircleIcon className="w-[30px]" />
+          </label>
+        </button>
+      </h1>
+    </div>
+  )}
+  <figure className="overflow-hidden">
+    <img
+      className="w-full transition duration-300 ease-in-out transform hover:scale-105"
+      src={image_url}
+      alt="laptop!"
+    />
+  </figure>
+  <div className="card-body p-4">
+    <h2 className="card-title text-3xl font-bold">{product_name}</h2>
 
-          <div className="flex">
-            <h3 className="text-lg font-semibold mr-1">
-              Seller Name: {seller_name}
-            </h3>
-            {LogUser?.status === "verified" && (
-              <CheckCircleIcon className="h-6 w-6 text-blue-500" />
-            )}
-          </div>
+    <div className="flex items-center my-2">
+      <h3 className="text-lg font-semibold mr-1">
+        Seller Name: {seller_name}
+      </h3>
+      {LogUser?.status === "verified" && (
+        <CheckCircleIcon className="h-6 w-6 text-blue-500" />
+      )}
+    </div>
 
-          <p className="text-lg font-semibold mr-1">Included: {included}</p>
-          <p className="text-lg font-semibold">Purchase Year: {PurchaseYear}</p>
-          <p className="text-lg font-semibold">
-            Original Price: {original_price}Tk
-          </p>
-          <p className="text-lg font-semibold">Sell Price: {price}Tk</p>
-          <p className="text-lg font-semibold">Contact: {mobile}</p>
-          <p className="text-lg font-semibold">Seller Location: {location}</p>
-          {!time && (
-            <p className="text-lg font-semibold">Posted Time: {posted_time}</p>
-          )}
-          {!time && (
-            <p className="text-lg font-semibold">Date: {posted_date}</p>
-          )}
-          {time && (
-            <p className="text-lg font-semibold">
-              Posted Time: {new Date(time).toLocaleString()}
-            </p>
-          )}
-          {isBuyer ? (
-            <div className="card-actions justify-end">
-              <label
-                onClick={() => setBookProduct(product)}
-                htmlFor="product-modal"
-                className="btn my-2"
-              >
-                Book Now
-              </label>
-            </div>
-          ) : (
-            <p className="text text-red-500 text-xl">
-              Only Buyer can order this item
-            </p>
-          )}
-        </div>
+    <p className="text-lg font-semibold">Included: {included}</p>
+    <p className="text-lg font-semibold">
+      Purchase Year: {PurchaseYear}
+    </p>
+    <p className="text-lg font-semibold">
+      Original Price: {original_price}Tk
+    </p>
+    <p className="text-lg font-semibold">Sell Price: {price}Tk</p>
+    <p className="text-lg font-semibold">Contact: {mobile}</p>
+    <p className="text-lg font-semibold">
+      Seller Location: {location}
+    </p>
+    {!time && (
+      <p className="text-lg font-semibold">
+        Posted Time: {posted_time}
+      </p>
+    )}
+    {!time && (
+      <p className="text-lg font-semibold">Date: {posted_date}</p>
+    )}
+    {time && (
+      <p className="text-lg font-semibold">
+        Posted Time: {new Date(time).toLocaleString()}
+      </p>
+    )}
+    {isBuyer ? (
+      <div className="card-actions justify-end">
+        <label
+          onClick={() => setBookProduct(product)}
+          htmlFor="product-modal"
+          className="btn my-2"
+        >
+          Book Now
+        </label>
       </div>
+    ) : (
+      <p className="text text-red-500 text-xl">
+        Only Buyer can order this item
+      </p>
+    )}
+  </div>
+</div>
+
+
+
+
       {
         <ReportModal
           reportModal={reportModal}

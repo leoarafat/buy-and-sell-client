@@ -1,38 +1,14 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import useTitle from "../../../customHooks/useTitle";
+import useUsers from "../../../customHooks/useUsers";
+import AwesomeLoader from "../../../components/AwesomeLoader";
 
 const AllBuyer = () => {
-  useTitle('allbuyer')
-  const { data: users = [] , refetch} = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await fetch("https://buy-and-sell-server.vercel.app/users");
-      const data = await res.json();
-      return data;
-    },
-  });
-
-  const handleUserDelete = userId =>{
-    fetch(`https://buy-and-sell-server.vercel.app/users/admin/${userId}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `bearer ${localStorage.getItem('accessToken')}`
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data)
-        
-        // console.log(data);
-        if (data.deletedCount > 0) {
-          toast.success("Delete Successful");
-          refetch();
-        }
-      });
+  useTitle("allBuyer");
+  const { users, isLoading, handleUserDelete } = useUsers();
+  if(isLoading){
+    return <AwesomeLoader/>
   }
-
   return (
     <div>
       <h3 className="text-3xl">All Buyer</h3>
@@ -56,7 +32,14 @@ const AllBuyer = () => {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.role}</td>
-                    <td><button onClick={()=>handleUserDelete(user._id)} className="btn btn-xs btn-primary">Delete</button></td>
+                    <td>
+                      <button
+                        onClick={() => handleUserDelete(user._id)}
+                        className="btn btn-xs btn-primary"
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </>
                 )}
               </tr>

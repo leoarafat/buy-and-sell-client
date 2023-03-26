@@ -19,46 +19,45 @@ const AdvertiseCard = ({ advertise, handleDelete }) => {
   } = advertise;
 
   return (
-    <div className="max-w-lg p-4 shadow-md  mx-auto ">
-      <div className="flex justify-between pb-4 border-bottom">
-        <div className="flex items-center">
-          <Link
-            rel="noopener noreferrer"
-            href="#"
-            className="mb-0 capitalize "
-          >
-            {product_name}
-          </Link>
-        </div>
-        <Link rel="noopener noreferrer" href="#">
-          <button className="" onClick={() => handleDelete(_id)}>Delete Item</button>
-        </Link>
-      </div>
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <img
-            src={image_url}
-            alt=""
-            className="block object-cover object-center w-[450px] rounded-md h-72 dark:bg-gray-500"
-          />
-          <div className="flex items-center text-xs">
-            <span>{new Date(time).toLocaleString()}</span>
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Link rel="noopener noreferrer" href="#" className="block">
-            <h3 className="text-xl font-semibold dark:text-violet-400">
-              {seller_name}
-            </h3>
-          </Link>
-          <p className="leading-snug dark:text-gray-400">{description}</p>
-          <p>Included: {included}</p>
-          <p>Original Price: {original_price}</p>
-          <p>Sell Price: {price}</p>
-          <p>Location{location}</p>
-        </div>
+    <div className="max-w-lg mx-auto bg-white shadow-md rounded-md overflow-hidden">
+    <div className="relative">
+      <img
+        src={image_url}
+        alt=""
+        className="w-full h-64 object-cover object-center transition duration-500 ease-in-out transform hover:scale-105"
+      />
+      <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white px-2 py-1 rounded-tr-md">
+        <span className="text-xs font-semibold">{new Date(time).toLocaleString()}</span>
       </div>
     </div>
+    <div className="p-4">
+      <h3 className="text-lg font-semibold mb-2 capitalize">{product_name}</h3>
+      <p className="text-gray-700 mb-2">{description}</p>
+      <div className="flex items-center mb-2">
+        <img src={''} alt="" className="w-8 h-8 rounded-full mr-2" />
+        <Link href="#" className="text-sm font-medium hover:text-primary">{seller_name}</Link>
+      </div>
+      <div className="flex justify-between items-center">
+        <div>
+          <p className="text-sm font-medium text-gray-700 mb-1">Included:</p>
+          <p className="text-sm text-gray-700">{included}</p>
+        </div>
+        <div>
+          <p className="text-sm font-medium text-gray-700 mb-1">Price:</p>
+          <p className="text-sm text-gray-700">${price}</p>
+        </div>
+      </div>
+      <div className="flex justify-end mt-4">
+        <button
+          className="text-sm font-medium text-white bg-primary px-4 py-2 rounded-md hover:bg-primary-dark focus:outline-none focus:bg-primary-dark"
+          onClick={() => handleDelete(_id)}
+        >
+          Delete Item
+        </button>
+      </div>
+    </div>
+  </div>
+  
   );
 };
 

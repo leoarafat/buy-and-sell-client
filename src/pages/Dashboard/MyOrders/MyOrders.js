@@ -1,26 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
+import useBookings from "../../../customHooks/useBookkngs";
 import useTitle from "../../../customHooks/useTitle";
 
 const MyOrders = () => {
-  useTitle('myorders')
+  useTitle("myorders");
   const { user } = useContext(AuthContext);
-  const url = `https://buy-and-sell-server.vercel.app/bookings?email=${user?.email}`;
-  const { data: bookingsProduct = [] } = useQuery({
-    queryKey: ["bookings", user?.email],
-    queryFn: async () => {
-      const res = await fetch(url, {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
-      const data = await res.json();
-      return data;
-    },
-  });
 
+  const bookingsProduct = useBookings(user?.email);
   return (
     <div>
       <h1>My Orders</h1>
@@ -36,24 +24,25 @@ const MyOrders = () => {
             </tr>
           </thead>
           <tbody>
-            {bookingsProduct && bookingsProduct.map((product) => (
-              <tr className="hover">
-                <th>{product.name}</th>
-                <td>{product.location}</td>
-                <td>{product.phone}</td>
-                <td>{product.price}Tk</td>
-                <td>
-                  {product.price && !product.paid && (
-                    <Link to={`/dashboard/payment/${product._id}`}>
-                      <button className="btn btn-sm btn-success">Pay</button>
-                    </Link>
-                  )}
-                  {product.price && product.paid && (
-                    <span className="text-success">Paid Success</span>
-                  )}
-                </td>
-              </tr>
-            ))}
+            {bookingsProduct &&
+              bookingsProduct.map((product) => (
+                <tr className="hover">
+                  <th>{product.name}</th>
+                  <td>{product.location}</td>
+                  <td>{product.phone}</td>
+                  <td>{product.price}Tk</td>
+                  <td>
+                    {product.price && !product.paid && (
+                      <Link to={`/dashboard/payment/${product._id}`}>
+                        <button className="btn btn-sm btn-success">Pay</button>
+                      </Link>
+                    )}
+                    {product.price && product.paid && (
+                      <span className="text-success">Paid Success</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

@@ -35,9 +35,16 @@ const Navbar = () => {
   const navbarItems = (
     <>
       <div className="flex items-center">
-        <div className="h-8 w-8" onClick={handleDark}>
-          {dark ? <SunIcon /> : <MoonIcon />}
-        </div>
+      <div
+      className={`h-8 w-8 ${dark ? "bg-gray-700" : "bg-gray-200"} rounded-full flex items-center justify-center cursor-pointer transition-colors duration-500`}
+      onClick={handleDark}
+    >
+      {dark ? (
+        <MoonIcon className="text-white transform transition-transform duration-500" />
+      ) : (
+        <SunIcon className="text-yellow-500 transform transition-transform duration-500" />
+      )}
+    </div>
       </div>
       <li>
         <Link className="font-semibold" to="/home">
@@ -102,7 +109,7 @@ const Navbar = () => {
             {navbarItems}
           </ul>
         </div>
-        <div className="flex">
+        <div className="flex items-center">
           <Lottie
             className="w-full h-[70px] hidden lg:block"
             animationData={NavAnim}

@@ -16,7 +16,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [loginUserInfo, setLoginUserInfo] = useState("");
   const [token] = useToken(loginUserInfo);
-  
+
   const from = location.state?.from?.pathname || "/";
   useEffect(() => {
     if (token) {
@@ -50,7 +50,6 @@ const Login = () => {
       });
   };
 
-  
   return (
     <div className="h-[800px] flex justify-center items-center">
       <div className="w-96 p-7">
@@ -106,7 +105,7 @@ const Login = () => {
           </div>
         </form>
         <p>
-          New to Doctors Portal{" "}
+          New to Buy & Sell{" "}
           <Link className="text-[#008374]" to="/register">
             Create new Account
           </Link>
@@ -121,3 +120,4 @@ const Login = () => {
 };
 
 export default Login;
+

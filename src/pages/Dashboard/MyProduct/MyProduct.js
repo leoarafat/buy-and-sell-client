@@ -1,107 +1,33 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
-import AwesomeLoader from '../../../components/AwesomeLoader';
-import Loader from '../../../components/Loader';
-import { AuthContext } from '../../../context/AuthProvider';
-import useTitle from '../../../customHooks/useTitle';
-import MyProductsCard from './MyProductsCard';
-
+import React, { useContext } from "react";
+import AwesomeLoader from "../../../components/AwesomeLoader";
+import { AuthContext } from "../../../context/AuthProvider";
+import useMyProducts from "../../../customHooks/useMyProduct";
+import useTitle from "../../../customHooks/useTitle";
+import MyProductsCard from "./MyProductsCard";
 
 const MyProduct = () => {
-    useTitle('myproducts')
+  useTitle("myproducts");
 
-    const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const { myProducts, isLoading, refetch } = useMyProducts(user?.email);
+  if (isLoading) {
+    return <AwesomeLoader />;
+  }
 
-    const url = `https://buy-and-sell-server.vercel.app/myProducts?email=${user?.email}`;
-
-    const { data: myProducts = [], isLoading, refetch } = useQuery({
-        queryKey: ['myProducts', user?.email],
-        queryFn: async () => {
-            const res = await fetch(url, {
-                headers: {
-                    authorization: `bearer ${localStorage.getItem('accessToken')}`
-                }
-            })
-            const data = await res.json();
-            return data;
-        }
-    })
-    if (isLoading) {
-        return <AwesomeLoader/>
-    }
-console.log(myProducts)
-
-    return (
-        <div className='grid md:grid-cols-2 gap-3 mx-auto'>
-          
-            {
-                myProducts.map(singleProduct =>
-                    <MyProductsCard
-                        key={singleProduct._id}
-                        singleProduct={singleProduct}
-                        refetch={refetch}
-                    ></MyProductsCard>)
-            }
-        </div>
-       
-    );
+  return (
+    <div className="grid md:grid-cols-2 gap-3 mx-auto">
+      {myProducts.map((singleProduct) => (
+        <MyProductsCard
+          key={singleProduct._id}
+          singleProduct={singleProduct}
+          refetch={refetch}
+        ></MyProductsCard>
+      ))}
+    </div>
+  );
 };
 
 export default MyProduct;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext } from 'react';
 // import { Link } from 'react-router-dom';
@@ -237,7 +163,6 @@ export default MyProduct;
 //                                 <p className="font-medium">{warranty ? warranty + ' Years' : '0'}</p>
 //                             </div>
 //                         </div>
-
 
 //                         <div className="sm:inline-flex sm:shrink-0 sm:items-center">
 //                             <button onClick={handleAdvertising} className="btn btn-outline rounded relative px-8 py-4 ml-4 overflow-hidden font-semibold dark:bg-gray-100 dark:text-gray-900">Advertise Item <FcAdvertising></FcAdvertising>

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import AwesomeLoader from '../../components/AwesomeLoader';
 import Loader from '../../components/Loader';
 
 import { AuthContext } from '../../context/AuthProvider';
@@ -11,7 +12,7 @@ const AdminRoute = ({ children }) => {
     const [isAdmin, isAdminLoading] = useAdmin(user?.email);
 
     if (loading || isAdminLoading) {
-        return <Loader/>
+        return <AwesomeLoader/>
     }
 
     if (user && isAdmin) {

@@ -1,57 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
+import Loader from "../../../components/Loader";
 import useTitle from "../../../customHooks/useTitle";
+import useUserManagement from "../../../customHooks/useUsersManagement";
 
 const AllUser = () => {
-  useTitle('alluser')
-  const { data: userData, refetch } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await fetch("https://buy-and-sell-server.vercel.app/users");
-      const data = await res.json();
-      return data;
-    },
-  });
-
-  const handleMakeAdmin = (userId) => {
-    fetch(`https://buy-and-sell-server.vercel.app/users/admin/${userId}`, {
-      method: "PUT",
-      headers: {
-        authorization: `bearer ${localStorage.getItem('accessToken')}`
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
-        if (data.modifiedCount > 0) {
-          toast.success("Verified Successful");
-          refetch();
-        }
-      });
-  };
-
-  const handleUserDelete = userId =>{
-    fetch(`https://buy-and-sell-server.vercel.app/users/admin/${userId}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `bearer ${localStorage.getItem('accessToken')}`
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data)
-        
-        // console.log(data);
-        if (data.deletedCount > 0) {
-          toast.success("Delete Successful");
-          refetch();
-        }
-      });
+  useTitle("alluser");
+  const { users, isLoading, error, handleMakeAdmin, handleUserDelete } =
+    useUserManagement();
+  if (isLoading) {
+    return <Loader />;
   }
-
-
-
+  if (error) {
+    toast.error("something went wrong");
+  }
   return (
     <div>
       <h1>All User</h1>
@@ -68,7 +30,7 @@ const AllUser = () => {
             </tr>
           </thead>
           <tbody>
-            {userData?.map((user,i) => (
+            {users?.map((user, i) => (
               <tr key={i} className="hover">
                 <th>{user.name}</th>
                 <td>{user.email}</td>
@@ -85,7 +47,12 @@ const AllUser = () => {
                   )}
                 </td>
                 <td>
-                  <button onClick={()=>handleUserDelete(user._id)} className="btn btn-xs btn-accent">Delete</button>
+                  <button
+                    onClick={() => handleUserDelete(user._id)}
+                    className="btn btn-xs btn-accent"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
